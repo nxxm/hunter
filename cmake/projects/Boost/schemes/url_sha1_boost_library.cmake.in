@@ -366,6 +366,9 @@ elseif("@MSVC@")
   elseif(is_x64)
     list(APPEND build_opts "address-model=64")
   endif()
+elseif("@EMSCRIPTEN@")
+  # for the moment WASM / asm.js is 32bit only
+  list(APPEND build_opts "address-model=32")
 endif()
 
 string(COMPARE NOTEQUAL "@HUNTER_JOBS_OPTION@" "" have_jobs)
