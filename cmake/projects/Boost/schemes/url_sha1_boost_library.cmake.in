@@ -72,6 +72,9 @@ elseif("@APPLE@")
 elseif("@CMAKE_COMPILER_IS_GNUCXX@")
   set(toolset_name "gcc")
   set(toolset_version "")
+elseif("@EMSCRIPTEN@")
+  set(toolset_name "clang")
+  set(toolset_version "")
 elseif(compiler_is_clang)
   set(toolset_name "clang")
   set(toolset_version "")
@@ -212,6 +215,10 @@ set(
 if("@MINGW@")
   # cross compile from "linux" to "windows" using mingw
   set(build_opts target-os=windows ${build_opts})
+endif()
+
+if("@EMSCRIPTEN@")
+  set(build_opts target-os=linux ${build_opts})
 endif()
 
 set(BOOST_VERSION "@HUNTER_Boost_VERSION@")
