@@ -131,6 +131,7 @@ ExternalProject_Add(
     1
     INSTALL_COMMAND
     ${install_cmd}
+    --no-cmake-config
     --layout=tagged
     -d0
     install
