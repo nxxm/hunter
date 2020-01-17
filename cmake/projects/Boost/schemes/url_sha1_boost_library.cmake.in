@@ -423,6 +423,15 @@ if("@ANDROID@")
   list(APPEND build_opts target-os=android)
 endif()
 
+if("@EMSCRIPTEN@")
+  # Clear Xcode environment
+  set(
+      bootstrap_cmd
+      . "@HUNTER_GLOBAL_SCRIPT_DIR@/clear-all.sh" && ${bootstrap_cmd}
+  )
+endif()
+
+
 if(HUNTER_STATUS_DEBUG)
   file(READ "${boost_user_jam}" USER_JAM_CONTENT)
   hunter_status_debug("Build options:")
