@@ -130,6 +130,7 @@ set(
     variant=release,debug
     define=BOOST_SP_NO_SYNC
     --layout=tagged
+    $<$<VERSION_GREATER_EQUAL: "1.72.0", @HUNTER_Boost_VERSION@>: --no-cmake-config >
     --user-config="${boost_user_jam}"
 )
 
