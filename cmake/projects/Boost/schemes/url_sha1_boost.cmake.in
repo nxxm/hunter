@@ -104,6 +104,11 @@ configure_file(
 )
 
 
+set(pass_boost_no_cmake_config )
+if (@HUNTER_Boost_VERSION@ VERSION_GREATER_EQUAL 1.72.0)
+  set(pass_boost_no_cmake_config --no-cmake-config)
+endif()
+
 ExternalProject_Add(
     "@HUNTER_EP_NAME@"
     URL
@@ -132,7 +137,6 @@ ExternalProject_Add(
     1
     INSTALL_COMMAND
     ${install_cmd}
-    $<$<VERSION_GREATER_EQUAL: "1.72.0", @HUNTER_Boost_VERSION@>: --no-cmake-config >
 
     --layout=tagged
     -d0
@@ -140,6 +144,7 @@ ExternalProject_Add(
     ${boost_list}
     "--prefix=@HUNTER_PACKAGE_INSTALL_PREFIX@"
     --ignore-site-config # Ignore Gentoo specific optimization "none" in site config that only the patched bjam of Gentoo can understand.
+    ${pass_boost_no_cmake_config}
     COMMAND # Copy license files
     "@CMAKE_COMMAND@"
     "-C@HUNTER_ARGS_FILE@" # for 'HUNTER_INSTALL_LICENSE_FILES'
@@ -148,13 +153,12 @@ ExternalProject_Add(
     -P
     "@HUNTER_SELF@/scripts/try-copy-license.cmake"
 
-    $<$<VERSION_LESS: "1.72.0", @HUNTER_Boost_VERSION@>: 
-      COMMAND
-      "@CMAKE_COMMAND@"
-      "-Dinstalldir=@HUNTER_PACKAGE_INSTALL_PREFIX@"
-      -P
-      "@HUNTER_SELF@/scripts/clean-boost-configs.cmake"
-    >
+    # ineffective on older Boost than 1.72.0 as we resort on --no-cmake-config
+    COMMAND
+    "@CMAKE_COMMAND@"
+    "-Dinstalldir=@HUNTER_PACKAGE_INSTALL_PREFIX@"
+    -P
+    "@HUNTER_SELF@/scripts/clean-boost-configs.cmake"
 
     LOG_CONFIGURE ${log_build}
     LOG_BUILD ${log_build}
