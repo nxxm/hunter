@@ -423,7 +423,7 @@ if("@ANDROID@")
   list(APPEND build_opts target-os=android)
 endif()
 
-if("@EMSCRIPTEN@")
+if(APPLE OR "@EMSCRIPTEN@")
   # Clear Xcode environment
   set(
       bootstrap_cmd
