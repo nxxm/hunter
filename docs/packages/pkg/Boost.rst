@@ -88,6 +88,15 @@ config file (``boost/config/user.hpp``):
     #define BOOST_MPL_CFG_NO_PREPROCESSED_HEADERS
     #define BOOST_MPL_LIMIT_LIST_SIZE 3
 
+  - Option ``USE_CONFIG_FROM_BOOST=ON`` use the package configuration file provided 
+    by the boost project.
+    Since boost version 1.70.0, the boost project provide a well maintained package 
+    configuration file for use with find_package's config mode.
+    See the difference between following example:
+    - `Boost-log <https://github.com/cpp-pm/hunter/blob/master/examples/Boost-log/CMakeLists.txt>`__
+    - `Boost-log-usingBoostConfig <https://github.com/cpp-pm/hunter/blob/master/examples/Boost-log-usingBoostConfig/CMakeLists.txt>`__
+
+
 Python
 ------
 
@@ -149,6 +158,27 @@ Example for Python 3:
     else()
       find_package(Boost CONFIG REQUIRED python36)
     endif()
+
+
+Python NumPy
+------------
+
+To build the NumPy plugin for Boost Python use option ``HUNTER_ENABLE_BOOST_PYTHON_NUMPY=True``.
+This will require ``pip_numpy`` and therefore ``hunter_venv``, see their docs for details and
+requirements.
+
+Example:
+
+.. code-block:: cmake
+
+    # config.cmake
+    hunter_config(
+      Boost
+      VERSION ${HUNTER_Boost_VERSION}
+      CMAKE_ARGS
+      PYTHON_VERSION=${PYTHON_VERSION}
+      HUNTER_ENABLE_BOOST_PYTHON_NUMPY=True
+    )
 
 Math
 ----
