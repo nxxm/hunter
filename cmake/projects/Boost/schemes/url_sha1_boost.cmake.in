@@ -74,7 +74,7 @@ if("@MINGW@")
   # Test scenario: MinGW installed in system, Visual Studio - not
   list(APPEND bootstrap_cmd "gcc")
 endif()
-if(APPLE OR "@EMSCRIPTEN@")
+if(NOT CMAKE_HOST_WIN32 AND (APPLE OR "@EMSCRIPTEN@"))
   # Clear Xcode environment
   set(
       bootstrap_cmd
