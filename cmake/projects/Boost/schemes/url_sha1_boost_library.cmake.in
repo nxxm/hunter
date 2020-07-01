@@ -231,7 +231,6 @@ set(
     threading=multi
     ${variants}
     --layout=tagged
-    --no-cmake-config
     toolset=${toolset_full_name}
     "--user-config=${boost_user_jam}"
     --with-@HUNTER_PACKAGE_COMPONENT@
