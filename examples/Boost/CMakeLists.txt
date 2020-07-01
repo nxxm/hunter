@@ -2,7 +2,7 @@
 # All rights reserved.
 
 cmake_minimum_required(VERSION 3.0)
-
+cmake_policy(SET CMP0057 NEW)
 set(Boost_DEBUG ON CACHE BOOLEAN "")
 
 # Emulate HunterGate:
