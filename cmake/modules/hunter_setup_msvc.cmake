@@ -167,6 +167,8 @@ macro(hunter_setup_msvc)
     get_filename_component(
         _hunter_vcvarsall_path "${_hunter_vcvarsall_path}" ABSOLUTE
     )
+    
+    message("_hunter_vcvarsall_path ${_hunter_vcvarsall_path}")
     find_file(
         HUNTER_MSVC_VCVARSALL
         "vcvarsall.bat"
@@ -174,6 +176,8 @@ macro(hunter_setup_msvc)
         "${_hunter_vcvarsall_path}"
         NO_DEFAULT_PATH
     )
+    message("_hunter_vcvarsall_path ${HUNTER_MSVC_VCVARSALL}")
+    
     if(NOT HUNTER_MSVC_VCVARSALL)
       if(HUNTER_TESTING)
         # ignore error, see 'tests/hunter_setup_msvc/CMakeLists.txt'
