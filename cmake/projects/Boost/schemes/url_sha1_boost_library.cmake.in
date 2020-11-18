@@ -71,7 +71,7 @@ if("@ANDROID@")
   set(toolset_name "gcc")
   set(toolset_version "ndk")
 elseif("@APPLE@")
-  set(toolset_name "clang-darwin110")
+  set(toolset_name "clang-darwin")
   set(toolset_version "")
 
   # Using CMAKE_AR on OSX leads to error (b2 use 'libtool'):
