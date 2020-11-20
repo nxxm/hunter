@@ -438,15 +438,16 @@ if(MSVC)
   hunter_cmake_args(
     Boost
     CMAKE_ARGS
+      USE_CONFIG_FROM_BOOST=ON
       BOOST_BUILD_DYNAMIC_VSRUNTIME=${_hunter_vs_md}
   )
-endif()
-
-hunter_cmake_args(
-    Boost
-    CMAKE_ARGS
+else()
+  hunter_cmake_args(
+      Boost
+      CMAKE_ARGS
         USE_CONFIG_FROM_BOOST=ON
-)
+  )
+endif()
 
 hunter_pick_scheme(DEFAULT url_sha1_boost)
 hunter_cacheable(Boost)
