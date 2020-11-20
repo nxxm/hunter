@@ -450,7 +450,7 @@ hunter_cmake_args(
 
 hunter_pick_scheme(DEFAULT url_sha1_boost)
 hunter_cacheable(Boost)
-hunter_download(PACKAGE_NAME Boost PACKAGE_INTERNAL_DEPS_ID "48")
+hunter_download(PACKAGE_NAME Boost PACKAGE_INTERNAL_DEPS_ID "49")
 
 
 if(NOT HUNTER_Boost_VERSION VERSION_LESS 1.72.0)
