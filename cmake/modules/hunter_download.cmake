@@ -214,7 +214,7 @@ function(hunter_download)
   endif()
 
   if(HUNTER_PACKAGE_SCHEME_INSTALL)
-    set(${root_name} "${HUNTER_INSTALL_PREFIX}")
+    set(${root_name} "${HUNTER_INSTALL_PREFIX};${HUNTER_INSTALL_PREFIX}/lib/cmake/${HUNTER_PACKAGE_NAME}-${HUNTER_PACKAGE_VERSION}")
     hunter_status_debug("Install to: ${HUNTER_INSTALL_PREFIX}")
   else()
     if(has_component)
