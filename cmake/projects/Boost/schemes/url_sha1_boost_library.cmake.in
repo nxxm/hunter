@@ -488,7 +488,7 @@ if("@ANDROID@")
   list(APPEND build_opts target-os=android)
 endif()
 
-if(APPLE OR "@EMSCRIPTEN@")
+if(NOT CMAKE_HOST_WIN32 AND (APPLE OR "@EMSCRIPTEN@"))
   # Clear Xcode environment
   set(
       bootstrap_cmd
