@@ -51,7 +51,7 @@ endforeach()
 
 if(CMAKE_HOST_WIN32)
   set(install_cmd "b2")
-  if("@MSVC@")
+  if("@MSVC@" OR "@EMSCRIPTEN@")
     set(HUNTER_MSVC_VCVARSALL "@HUNTER_MSVC_VCVARSALL@")
     set(HUNTER_MSVC_ARCH "@HUNTER_MSVC_ARCH@")
     set(HUNTER_PACKAGE_SOURCE_DIR "@HUNTER_PACKAGE_SOURCE_DIR@")
