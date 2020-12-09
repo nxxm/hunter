@@ -458,7 +458,7 @@ if(CMAKE_HOST_WIN32)
   endif()
 
   if("@EMSCRIPTEN@")
-    list(APPEND bootstrap_cmd "clang")
+    list(APPEND bootstrap_cmd "msvc")
   endif()
 
 elseif(APPLE)
