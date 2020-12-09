@@ -63,10 +63,6 @@ if(CMAKE_HOST_WIN32)
     set(bootstrap_cmd "bootstrap.bat")
   endif()
 
-  if("@EMSCRIPTEN@")
-    list(APPEND bootstrap_cmd "msvc")
-  endif()
-
 else()
   set(install_cmd "./b2")
   set(bootstrap_cmd "./bootstrap.sh")
