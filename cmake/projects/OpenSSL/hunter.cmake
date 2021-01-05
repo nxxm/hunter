@@ -494,9 +494,9 @@ hunter_add_version(
     072cf2bc8e19c7c59a42e7e20977fe3037c9c9f3
 )
 
-if(MINGW)
+if(MINGW AND NOT CMAKE_HOST_WIN32  )
   hunter_pick_scheme(DEFAULT url_sha1_openssl)
-elseif(WIN32)
+elseif(WIN32 OR (MINGW AND CMAKE_HOST_WIN32))
   if("${HUNTER_OpenSSL_VERSION}" VERSION_LESS "1.1")
     hunter_pick_scheme(DEFAULT url_sha1_openssl_windows)
   else()
