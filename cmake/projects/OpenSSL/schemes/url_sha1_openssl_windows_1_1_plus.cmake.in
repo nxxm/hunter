@@ -115,10 +115,18 @@ set(openssl_install_dir "@HUNTER_PACKAGE_INSTALL_PREFIX@")
 #   * opt
 #   * shared
 #   * NASM_ROOT
+
+if(MINGW)
+configure_file(
+    "@HUNTER_PACKAGE_SETUP_DIR@/ep-stages/configure_1_1_plus_clang.cmake.in"
+    "@HUNTER_PACKAGE_BUILD_DIR@/configure_1_1_plus_clang.cmake"
+    @ONLY)
+else()
 configure_file(
     "@HUNTER_PACKAGE_SETUP_DIR@/ep-stages/configure_1_1_plus.cmake.in"
     "@HUNTER_PACKAGE_BUILD_DIR@/configure_1_1_plus.cmake"
     @ONLY)
+endif()
 
 file(MAKE_DIRECTORY "${openssl_dir}")
 
@@ -141,7 +149,7 @@ ExternalProject_Add(
     CONFIGURE_COMMAND
     ""
     COMMAND
-    "@CMAKE_COMMAND@" -P "@HUNTER_PACKAGE_BUILD_DIR@/configure_1_1_plus.cmake"
+    "@CMAKE_COMMAND@" -P "@HUNTER_PACKAGE_BUILD_DIR@/configure_1_1_plus_clang.cmake"
     COMMAND
     mingw32-make install
     BUILD_COMMAND

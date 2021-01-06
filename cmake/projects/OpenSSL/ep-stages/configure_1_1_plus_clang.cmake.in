@@ -13,16 +13,17 @@ if("@openssl_dir@" STREQUAL "")
 endif()
 
 
-
 execute_process(COMMAND
-  perl Configure  @arch@ @opt@ @shared@ "--prefix=@openssl_install_dir@" "--openssldir=@openssl_dir@" RESULT_VARIABLE result)
+  perl Configure CC=clang  @arch@ @opt@ @shared@ "--prefix=@openssl_install_dir@" "--openssldir=@openssl_dir@" RESULT_VARIABLE result)
+
 
 if(NOT result EQUAL 0)
   message(FATAL_ERROR "OpenSSL configure failed: ${result}")
 endif()
 
-  execute_process(COMMAND
-  nmake RESULT_VARIABLE result)
+execute_process(COMMAND
+  mingw32-make RESULT_VARIABLE result)
+  
 
 if(NOT result EQUAL 0)
   message(FATAL_ERROR "OpenSSL nmake failed: ${result}")
