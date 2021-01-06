@@ -20,6 +20,18 @@ include(hunter_assert_not_empty_string)
 hunter_status_debug("Scheme: url_sha1_openssl_windows_1_1_plus")
 
 # Check preconditions
+if(MINGW)
+hunter_assert_not_empty_string("@HUNTER_SELF@")
+hunter_assert_not_empty_string("@HUNTER_EP_NAME@")
+hunter_assert_not_empty_string("@HUNTER_PACKAGE_URL@")
+hunter_assert_not_empty_string("@HUNTER_PACKAGE_SHA1@")
+hunter_assert_not_empty_string("@HUNTER_PACKAGE_DOWNLOAD_DIR@")
+hunter_assert_not_empty_string("@HUNTER_PACKAGE_SOURCE_DIR@")
+hunter_assert_not_empty_string("@HUNTER_PACKAGE_INSTALL_PREFIX@")
+hunter_assert_not_empty_string("@HUNTER_PACKAGE_LICENSE_DIR@")
+hunter_assert_not_empty_string("@HUNTER_GLOBAL_SCRIPT_DIR@")
+hunter_assert_not_empty_string("@HUNTER_TLS_VERIFY@")
+else()
 hunter_assert_not_empty_string("@HUNTER_SELF@")
 hunter_assert_not_empty_string("@HUNTER_EP_NAME@")
 hunter_assert_not_empty_string("@HUNTER_PACKAGE_URL@")
@@ -32,6 +44,7 @@ hunter_assert_not_empty_string("@HUNTER_MSVC_VCVARSALL@")
 hunter_assert_not_empty_string("@HUNTER_PACKAGE_LICENSE_DIR@")
 hunter_assert_not_empty_string("@HUNTER_GLOBAL_SCRIPT_DIR@")
 hunter_assert_not_empty_string("@HUNTER_TLS_VERIFY@")
+endif()
 
 # `find_package(Perl)` is not suitable because `perl` from
 # cygwin directory can be found
@@ -62,6 +75,8 @@ endif()
 string(COMPARE EQUAL "@HUNTER_MSVC_ARCH@" "amd64" is_amd64)
 if(is_amd64)
   set(arch "VC-WIN64A")
+elseif(MINGW)
+set(arch "mingw64")
 else()
   set(arch "VC-WIN32")
 endif()
@@ -109,6 +124,41 @@ configure_file(
 
 file(MAKE_DIRECTORY "${openssl_dir}")
 
+if(MINGW)
+ExternalProject_Add(
+    "@HUNTER_EP_NAME@"
+    URL
+    "@HUNTER_PACKAGE_URL@"
+    URL_HASH
+    SHA1=@HUNTER_PACKAGE_SHA1@
+    DOWNLOAD_DIR
+    "@HUNTER_PACKAGE_DOWNLOAD_DIR@"
+    TLS_VERIFY
+    "@HUNTER_TLS_VERIFY@"
+    SOURCE_DIR
+    "@HUNTER_PACKAGE_SOURCE_DIR@"
+    INSTALL_DIR
+    "@HUNTER_PACKAGE_INSTALL_PREFIX@"
+        # not used, just avoid creating Install/<name> empty directory
+    CONFIGURE_COMMAND
+    ""
+    COMMAND
+    "@CMAKE_COMMAND@" -P "@HUNTER_PACKAGE_BUILD_DIR@/configure_1_1_plus.cmake"
+    COMMAND
+    mingw32-make.exe install
+    BUILD_COMMAND
+    "@CMAKE_COMMAND@" -E echo "Dummy build step"
+    BUILD_IN_SOURCE
+    1
+    INSTALL_COMMAND
+    "@CMAKE_COMMAND@"
+    "-C@HUNTER_ARGS_FILE@" # for 'HUNTER_INSTALL_LICENSE_FILES'
+    "-Dsrcdir=@HUNTER_PACKAGE_SOURCE_DIR@"
+    "-Ddstdir=@HUNTER_PACKAGE_LICENSE_DIR@"
+    -P
+    "@HUNTER_SELF@/scripts/try-copy-license.cmake"
+    ${log_opts}
+else()
 ExternalProject_Add(
     "@HUNTER_EP_NAME@"
     URL
@@ -142,4 +192,5 @@ ExternalProject_Add(
     -P
     "@HUNTER_SELF@/scripts/try-copy-license.cmake"
     ${log_opts}
+endif()
 )
