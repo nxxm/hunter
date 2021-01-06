@@ -12,8 +12,12 @@ if("@openssl_dir@" STREQUAL "")
   message(FATAL_ERROR "openssl_dir is empty")
 endif()
 
+if(MINGW)
 execute_process(COMMAND
-  perl Configure @arch@ @opt@ @shared@ "--prefix=@openssl_install_dir@" "--openssldir=@openssl_dir@" RESULT_VARIABLE result)
+  perl Configure CC=clang  @arch@ @opt@ @shared@ "--prefix=@openssl_install_dir@" "--openssldir=@openssl_dir@" RESULT_VARIABLE result)
+else()
+  perl Configure  @arch@ @opt@ @shared@ "--prefix=@openssl_install_dir@" "--openssldir=@openssl_dir@" RESULT_VARIABLE result)
+endif()
 
 if(NOT result EQUAL 0)
   message(FATAL_ERROR "OpenSSL configure failed: ${result}")
