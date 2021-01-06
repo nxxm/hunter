@@ -158,6 +158,7 @@ ExternalProject_Add(
     -P
     "@HUNTER_SELF@/scripts/try-copy-license.cmake"
     ${log_opts}
+    )
 else()
 ExternalProject_Add(
     "@HUNTER_EP_NAME@"
@@ -192,5 +193,5 @@ ExternalProject_Add(
     -P
     "@HUNTER_SELF@/scripts/try-copy-license.cmake"
     ${log_opts}
+    )
 endif()
-)
