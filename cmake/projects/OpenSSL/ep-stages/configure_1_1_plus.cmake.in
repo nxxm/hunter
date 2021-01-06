@@ -21,7 +21,7 @@ endif()
 
 if(MINGW)
 execute_process(COMMAND
-  mingw32-make.exe RESULT_VARIABLE result)
+  mingw32-make RESULT_VARIABLE result)
   else()
   execute_process(COMMAND
   nmake RESULT_VARIABLE result)

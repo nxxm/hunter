@@ -143,7 +143,7 @@ ExternalProject_Add(
     COMMAND
     "@CMAKE_COMMAND@" -P "@HUNTER_PACKAGE_BUILD_DIR@/configure_1_1_plus.cmake"
     COMMAND
-    mingw32-make.exe install
+    mingw32-make install
     BUILD_COMMAND
     "@CMAKE_COMMAND@" -E echo "Dummy build step"
     BUILD_IN_SOURCE
