@@ -10,31 +10,26 @@ include(hunter_cmake_args)
 include(hunter_download)
 include(hunter_pick_scheme)
 
-hunter_add_version(
-    PACKAGE_NAME
-    BoringSSL
-    VERSION
-    1.0.0
-    URL
-    "https://github.com/hunter-packages/boringssl/archive/v1.0.0.tar.gz"
-    SHA1
-    caa7cd122960c9427bda30db5020b9058cb1ed0a
-    )
 
 hunter_add_version(
     PACKAGE_NAME
     BoringSSL
     VERSION
-    0.0.0-0f5ecd3a8-p0
+    0.0.2
     URL
-    "https://github.com/hunter-packages/boringssl/archive/v0.0.0-0f5ecd3a8-p0.tar.gz"
+    "https://github.com/nxxm/boringssl/archive/nxxm-0.0.0-05dd18d0.tar.gz"
     SHA1
-    fee17b226c3132edc44711365eb5ea023c55bb1d
+    9528eec4d1b41cb574da850063564b9e3e1bde65
     )
 
-if(MSVC)
-  hunter_cmake_args(BoringSSL CMAKE_ARGS OPENSSL_NO_ASM=YES)
-endif()
+
+
+  hunter_cmake_args(BoringSSL CMAKE_ARGS 
+  OPENSSL_NO_ASM=YES  
+  CMAKE_VERBOSE_MAKEFILE:BOOL=ON
+  CMAKE_C_FLAGS=-pthread 
+  CMAKE_CXX_FLAGS=-pthread
+  )
 
 hunter_pick_scheme(DEFAULT url_sha1_cmake)
 hunter_cacheable(BoringSSL)
