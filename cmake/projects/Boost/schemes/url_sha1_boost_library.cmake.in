@@ -70,6 +70,10 @@ set(use_cmake_archiver TRUE)
 if("@ANDROID@")
   set(toolset_name "gcc")
   set(toolset_version "ndk")
+elseif(CMAKE_HOST_WIN32 AND "@MINGW@")
+  set(toolset_name "gcc")
+  set(toolset_name2 "clang")
+  set(toolset_version "")
 elseif("@APPLE@")
   set(toolset_name "clang-darwin")
   set(toolset_version "")
@@ -86,7 +90,7 @@ elseif("@CMAKE_COMPILER_IS_GNUCXX@")
 elseif("@EMSCRIPTEN@")
   set(toolset_name "clang")
   set(toolset_version "")
-elseif(compiler_is_clang)
+elseif(compiler_is_clang AND NOT "@MINGW@")
   set(toolset_name "clang")
   set(toolset_version "")
 elseif("@MSVC@")
@@ -244,10 +248,10 @@ if (@HUNTER_Boost_VERSION@ VERSION_GREATER_EQUAL 1.72.0 AND NOT USE_CONFIG_FROM_
   list(APPEND build_opts --no-cmake-config )
 endif()
 
-if("@MINGW@")
+#if("@MINGW@")
   # cross compile from "linux" to "windows" using mingw
-  set(build_opts target-os=windows ${build_opts})
-endif()
+ # set(build_opts target-os=windows ${build_opts})
+#endif()
 
 if("@EMSCRIPTEN@")
   set(build_opts target-os=linux ${build_opts})
@@ -265,12 +269,21 @@ hunter_boost_component_b2_args(
 
 string(REPLACE " " ";" cxx_flags_list "${CMAKE_CXX_FLAGS}")
 
+if(CMAKE_HOST_WIN32 AND "@MINGW@")
+file(
+    WRITE
+    ${boost_user_jam}
+    "using ${toolset_name2}\n"
+    "  : ${toolset_version}\n"
+)
+else()
 file(
     WRITE
     ${boost_user_jam}
     "using ${toolset_name}\n"
     "  : ${toolset_version}\n"
 )
+endif()
 
 if(MSVC)
   # For Visual Studio C++ flags must not be set in compiler section.
@@ -425,6 +438,8 @@ elseif("@MSVC@")
   elseif(is_x64)
     list(APPEND build_opts "address-model=64")
   endif()
+elseif(CMAKE_HOST_WIN32 AND "@MINGW@")
+  list(APPEND build_opts "address-model=64")
 elseif("@EMSCRIPTEN@")
   # for the moment WASM / asm.js is 32bit only
   list(APPEND build_opts "address-model=32")
@@ -476,7 +491,7 @@ if(compiler_is_clang AND NOT CMAKE_CROSSCOMPILING)
   list(APPEND bootstrap_cmd "--with-toolset=clang")
 endif()
 
-if("@MINGW@")
+if(CMAKE_HOST_WIN32 AND "@MINGW@")
   list(APPEND bootstrap_cmd "gcc")
 endif()
 
@@ -576,3 +591,4 @@ set(HUNTER_Boost_VERSION "@HUNTER_Boost_VERSION@")
 if(NOT USE_CONFIG_FROM_BOOST OR HUNTER_Boost_VERSION VERSION_LESS 1.72.0)
   hunter_install_boost_config()
 endif()
+
