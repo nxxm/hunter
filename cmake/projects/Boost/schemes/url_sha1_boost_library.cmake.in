@@ -75,7 +75,7 @@ elseif(CMAKE_HOST_WIN32 AND "@MINGW@")
   set(toolset_name2 "clang")
   set(toolset_version "")
 elseif("@APPLE@")
-  set(toolset_name "clang-darwin")
+  set(toolset_name "clang")
   set(toolset_version "")
 
   # Using CMAKE_AR on OSX leads to error (b2 use 'libtool'):
