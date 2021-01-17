@@ -65,6 +65,8 @@ if(NOT libfound)
 endif()
 
 string(COMPARE EQUAL "@CMAKE_CXX_COMPILER_ID@" "Clang" compiler_is_clang)
+string(COMPARE EQUAL "@CMAKE_CXX_COMPILER_ID@" "AppleClang " compiler_is_apple_clang)
+
 
 set(use_cmake_archiver TRUE)
 if("@ANDROID@")
@@ -74,8 +76,8 @@ elseif(CMAKE_HOST_WIN32 AND "@MINGW@")
   set(toolset_name "gcc")
   set(toolset_name2 "clang")
   set(toolset_version "")
-elseif("@APPLE@")
-  set(toolset_name "clang")
+elseif("@APPLE@" AND compiler_is_apple_clang)
+  set(toolset_name "clang-darwin")
   set(toolset_version "")
 
   # Using CMAKE_AR on OSX leads to error (b2 use 'libtool'):
