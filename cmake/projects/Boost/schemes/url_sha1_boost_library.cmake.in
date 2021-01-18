@@ -74,7 +74,7 @@ if("@ANDROID@")
   set(toolset_version "ndk")
 elseif(CMAKE_HOST_WIN32 AND "@MINGW@")
   set(toolset_name "gcc")
-  set(toolset_name2 "clang")
+  #set(toolset_name2 "clang")
   set(toolset_version "")
 elseif("@APPLE@" AND compiler_is_apple_clang)
   set(toolset_name "clang-darwin")
@@ -271,21 +271,21 @@ hunter_boost_component_b2_args(
 
 string(REPLACE " " ";" cxx_flags_list "${CMAKE_CXX_FLAGS}")
 
-if(CMAKE_HOST_WIN32 AND "@MINGW@")
-file(
-    WRITE
-    ${boost_user_jam}
-    "using ${toolset_name2}\n"
-    "  : ${toolset_version}\n"
-)
-else()
+#if(CMAKE_HOST_WIN32 AND "@MINGW@")
+#file(
+#    WRITE
+#   ${boost_user_jam}
+#    "using ${toolset_name2}\n"
+#    "  : ${toolset_version}\n"
+#)
+#else()
 file(
     WRITE
     ${boost_user_jam}
     "using ${toolset_name}\n"
     "  : ${toolset_version}\n"
 )
-endif()
+#endif()
 
 if(MSVC)
   # For Visual Studio C++ flags must not be set in compiler section.
