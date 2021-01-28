@@ -19,7 +19,7 @@ hunter_add_version(
     URL
     "https://github.com/nxxm/boringssl/archive/nxxm-0.0.0-05dd18d0.tar.gz"
     SHA1
-    e45c3dae22c5e607681913acf2e7b4af201e02b1
+    08f6062b77a670fcca5c4e3ed5f13b90c0413149
     )
 
 
