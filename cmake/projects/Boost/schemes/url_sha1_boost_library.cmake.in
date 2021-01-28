@@ -248,10 +248,10 @@ if (@HUNTER_Boost_VERSION@ VERSION_GREATER_EQUAL 1.72.0 AND NOT USE_CONFIG_FROM_
   list(APPEND build_opts --no-cmake-config )
 endif()
 
-#if("@MINGW@")
+if("@MINGW@" AND  CMAKE_CROSSCOMPILING)
   # cross compile from "linux" to "windows" using mingw
- # set(build_opts target-os=windows ${build_opts})
-#endif()
+  set(build_opts target-os=windows ${build_opts})
+endif()
 
 if("@EMSCRIPTEN@")
   set(build_opts target-os=linux ${build_opts})
@@ -482,7 +482,7 @@ if(compiler_is_clang AND NOT CMAKE_CROSSCOMPILING AND NOT "@MINGW@")
   list(APPEND bootstrap_cmd "--with-toolset=clang")
 endif()
 
-if(CMAKE_HOST_WIN32 AND "@MINGW@")
+if("@MINGW@")
   list(APPEND bootstrap_cmd "gcc")
 endif()
 

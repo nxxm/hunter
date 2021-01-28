@@ -19,15 +19,13 @@ hunter_add_version(
     URL
     "https://github.com/nxxm/boringssl/archive/nxxm-0.0.0-05dd18d0.tar.gz"
     SHA1
-    9528eec4d1b41cb574da850063564b9e3e1bde65
+    e45c3dae22c5e607681913acf2e7b4af201e02b1
     )
 
 
 
   hunter_cmake_args(BoringSSL CMAKE_ARGS 
   OPENSSL_NO_ASM=YES  
-  CMAKE_C_FLAGS=-pthread 
-  CMAKE_CXX_FLAGS=-pthread
   )
 
 hunter_pick_scheme(DEFAULT url_sha1_cmake)
