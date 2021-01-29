@@ -25,6 +25,7 @@ hunter_add_version(
 
 hunter_cmake_args(BoringSSL CMAKE_ARGS 
   OPENSSL_NO_ASM=YES  
+)
 
 
 hunter_pick_scheme(DEFAULT url_sha1_cmake)
