@@ -10,6 +10,16 @@ include(hunter_cmake_args)
 include(hunter_download)
 include(hunter_pick_scheme)
 
+hunter_add_version(
+    PACKAGE_NAME
+    BoringSSL
+    VERSION
+    0.0.3
+    URL
+    "https://github.com/nxxm/boringssl/archive/v0.0.3.tar.gz"
+    SHA1
+    9a8688f6016869b684ddb5cab3ca9e3fb39c7621
+    )
 
 hunter_add_version(
     PACKAGE_NAME
