@@ -65,15 +65,19 @@ if(NOT libfound)
 endif()
 
 string(COMPARE EQUAL "@CMAKE_CXX_COMPILER_ID@" "Clang" compiler_is_clang)
+string(COMPARE EQUAL "@CMAKE_CXX_COMPILER_ID@" "AppleClang " compiler_is_apple_clang)
+
 
 set(use_cmake_archiver TRUE)
 if("@ANDROID@")
   set(toolset_name "gcc")
   set(toolset_version "ndk")
-elseif("@APPLE@")
+elseif(CMAKE_HOST_WIN32 AND "@MINGW@")
+  set(toolset_name "gcc")
+  set(toolset_version "")
+elseif("@APPLE@" AND compiler_is_apple_clang)
   set(toolset_name "clang-darwin")
   set(toolset_version "")
-
   # Using CMAKE_AR on OSX leads to error (b2 use 'libtool'):
   # * https://travis-ci.org/ingenue/hunter/jobs/204617507
   set(use_cmake_archiver FALSE)
@@ -86,7 +90,7 @@ elseif("@CMAKE_COMPILER_IS_GNUCXX@")
 elseif("@EMSCRIPTEN@")
   set(toolset_name "clang")
   set(toolset_version "")
-elseif(compiler_is_clang)
+elseif(compiler_is_clang AND NOT "@MINGW@")
   set(toolset_name "clang")
   set(toolset_version "")
 elseif("@MSVC@")
@@ -244,7 +248,7 @@ if (@HUNTER_Boost_VERSION@ VERSION_GREATER_EQUAL 1.72.0 AND NOT USE_CONFIG_FROM_
   list(APPEND build_opts --no-cmake-config )
 endif()
 
-if("@MINGW@")
+if("@MINGW@" AND  CMAKE_CROSSCOMPILING)
   # cross compile from "linux" to "windows" using mingw
   set(build_opts target-os=windows ${build_opts})
 endif()
@@ -425,6 +429,8 @@ elseif("@MSVC@")
   elseif(is_x64)
     list(APPEND build_opts "address-model=64")
   endif()
+elseif(CMAKE_HOST_WIN32 AND "@MINGW@")
+  list(APPEND build_opts "address-model=64")
 elseif("@EMSCRIPTEN@")
   # for the moment WASM / asm.js is 32bit only
   list(APPEND build_opts "address-model=32")
@@ -472,7 +478,7 @@ else()
   set(patch_cmd "@CMAKE_COMMAND@" -E echo "Dummy patch command")
 endif()
 
-if(compiler_is_clang AND NOT CMAKE_CROSSCOMPILING)
+if(compiler_is_clang AND NOT CMAKE_CROSSCOMPILING AND NOT "@MINGW@")
   list(APPEND bootstrap_cmd "--with-toolset=clang")
 endif()
 
@@ -576,3 +582,4 @@ set(HUNTER_Boost_VERSION "@HUNTER_Boost_VERSION@")
 if(NOT USE_CONFIG_FROM_BOOST OR HUNTER_Boost_VERSION VERSION_LESS 1.72.0)
   hunter_install_boost_config()
 endif()
+
