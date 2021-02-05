@@ -16,9 +16,9 @@ hunter_add_version(
     VERSION
     1.1.0
     URL
-    "https://github.com/libgit2/libgit2/releases/download/v1.1.0/libgit2-1.1.0.tar.gz"
+    "https://github.com/nxxm/libgit2/archive/feature/use_hunter_for_nxxm.tar.gz"
     SHA1
-    c699cf5cc50590b64db1b9b2ebef40273ccc0f7a
+    5f5d0480f5d87da2d6cd04106a9fd3027a78d64f
     )
 
 
