@@ -25,7 +25,8 @@ hunter_add_version(
 
 hunter_cmake_args(libgit2 CMAKE_ARGS 
 BUILD_CLAR=OFF 
-BUILD_SHARED_LIBS=OFF	 
+BUILD_SHARED_LIBS=OFF
+USE_HTTPS=OFF 
 )
 
 
