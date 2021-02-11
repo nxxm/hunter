@@ -482,7 +482,7 @@ if(compiler_is_clang AND NOT CMAKE_CROSSCOMPILING AND NOT "@MINGW@")
   list(APPEND bootstrap_cmd "--with-toolset=clang")
 endif()
 
-if("@MINGW@")
+if("@MINGW@" OR (CMAKE_HOST_WIN32 AND "@EMSCRIPTEN@"))
   list(APPEND bootstrap_cmd "gcc")
 endif()
 

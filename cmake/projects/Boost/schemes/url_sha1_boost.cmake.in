@@ -51,7 +51,7 @@ endforeach()
 
 if(CMAKE_HOST_WIN32)
   set(install_cmd "b2")
-  if("@MSVC@" OR "@EMSCRIPTEN@")
+  if("@MSVC@")
     set(HUNTER_MSVC_VCVARSALL "@HUNTER_MSVC_VCVARSALL@")
     set(HUNTER_MSVC_ARCH "@HUNTER_MSVC_ARCH@")
     set(HUNTER_PACKAGE_SOURCE_DIR "@HUNTER_PACKAGE_SOURCE_DIR@")
@@ -71,7 +71,7 @@ endif()
 
 string(COMPARE EQUAL "@CMAKE_CXX_COMPILER_ID@" "Clang" compiler_is_clang)
 
-if("@MINGW@")
+if("@MINGW@" OR (CMAKE_HOST_WIN32 AND "@EMSCRIPTEN@"))
   # Test scenario: MinGW installed in system, Visual Studio - not
   list(APPEND bootstrap_cmd "gcc")
 endif()
