@@ -1,0 +1,4 @@
+cd /d @HUNTER_PACKAGE_SOURCE_DIR@
+REM Make it use our own PATH provided gcc to build later boost libs with emscripten
+set CXX=
+bootstrap.bat gcc
