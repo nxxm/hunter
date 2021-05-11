@@ -14,7 +14,7 @@ include(hunter_check_toolchain_definition)
 set(Boost_NO_SYSTEM_PATHS ON)
 
 # use base url for official boost releases
-set(_hunter_boost_base_url "https://dl.bintray.com/boostorg/release")
+set(_hunter_boost_base_url "https://downloads.sourceforge.net/project/boost/boost/")
 
 hunter_add_version(
     PACKAGE_NAME
@@ -187,7 +187,7 @@ hunter_add_version(
     VERSION
     "1.73.0"
     URL
-    "${_hunter_boost_base_url}/1.73.0/source/boost_1_73_0.tar.bz2"
+    "${_hunter_boost_base_url}/1.73.0/boost_1_73_0.tar.bz2"
     SHA1
     6d6ed02b29c860fd21b274fc4e1f820855e765e9
 )
