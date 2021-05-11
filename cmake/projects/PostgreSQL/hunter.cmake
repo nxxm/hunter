@@ -2,13 +2,14 @@
 # All rights reserved.
 
 # !!! DO NOT PLACE HEADER GUARDS HERE !!!
-
 include(hunter_add_version)
-include(hunter_cacheable)
+include(hunter_cmake_args)
 include(hunter_configuration_types)
 include(hunter_pick_scheme)
 include(hunter_download)
-include(hunter_cmake_args)
+if (NOT (linux AND  CMAKE_CXX_COMPILER_ID STREQUAL "GNU"))
+include(hunter_cacheable)
+endif()
 
 hunter_add_version(
     PACKAGE_NAME
@@ -51,6 +52,14 @@ if (ANDROID OR IOS)
   )
 endif()
 
+
+if (linux AND  CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+hunter_configuration_types(PostgreSQL CONFIGURATION_TYPES Release)
+hunter_pick_scheme(DEFAULT url_sha1_PostgreSQL_autotools)
+hunter_download(
+    PACKAGE_NAME PostgreSQL
+)
+else()
 hunter_configuration_types(PostgreSQL CONFIGURATION_TYPES Release)
 hunter_pick_scheme(DEFAULT url_sha1_autotools)
 hunter_cacheable(PostgreSQL)
@@ -64,3 +73,4 @@ hunter_download(
     "lib/pkgconfig/libpq.pc"
     "lib/postgresql/pgxs/src/Makefile.global"
 )
+endif()
