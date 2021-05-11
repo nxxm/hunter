@@ -11,6 +11,7 @@ if (NOT (linux AND  CMAKE_CXX_COMPILER_ID STREQUAL "GNU"))
 include(hunter_cacheable)
 endif()
 
+
 hunter_add_version(
     PACKAGE_NAME
     PostgreSQL
