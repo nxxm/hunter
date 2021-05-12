@@ -2,12 +2,16 @@
 # All rights reserved.
 
 # !!! DO NOT PLACE HEADER GUARDS HERE !!!
+if(UNIX AND NOT APPLE)
+set(LINUX TRUE)
+endif()
+
 include(hunter_add_version)
 include(hunter_cmake_args)
 include(hunter_configuration_types)
 include(hunter_pick_scheme)
 include(hunter_download)
-if (NOT (linux AND  CMAKE_CXX_COMPILER_ID STREQUAL "GNU"))
+if (NOT LINUX)
 include(hunter_cacheable)
 endif()
 
@@ -54,7 +58,7 @@ if (ANDROID OR IOS)
 endif()
 
 
-if (linux AND  CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+if (LINUX)
 hunter_configuration_types(PostgreSQL CONFIGURATION_TYPES Release)
 hunter_pick_scheme(DEFAULT url_sha1_PostgreSQL_autotools)
 hunter_download(
