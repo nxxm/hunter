@@ -9,6 +9,15 @@ hunter_add_version(
   PACKAGE_NAME
   bison
   VERSION
+  "3.7.6"
+  URL "https://ftp.gnu.org/gnu/bison/bison-3.7.6.tar.gz"
+  SHA1 "119bd2892897c6541bc23fb65bf6f0f8805668a1"
+)
+
+hunter_add_version(
+  PACKAGE_NAME
+  bison
+  VERSION
   "3.0.4"
   URL "https://ftp.gnu.org/gnu/bison/bison-3.0.4.tar.gz"
   SHA1 "ec1f2706a7cfedda06d29dc394b03e092a1e1b74"
